@@ -7,7 +7,7 @@
 
 
 extern "C"
-/*
+
 JNIEXPORT jboolean JNICALL Java_com_codecs_MainActivity_isEncoder(JNIEnv *env, jobject instance, jobject info) {
     jclass codecInfo = env->GetObjectClass(info);
     jmethodID id = env->GetMethodID(codecInfo,"isEncoder","()Z");
@@ -17,7 +17,7 @@ JNIEXPORT jboolean JNICALL Java_com_codecs_MainActivity_isEncoder(JNIEnv *env, j
     }
     return result;
 }
-*/
+
 
 
 JNIEXPORT jobjectArray JNICALL Java_com_codecs_MainActivity_getListCodec(JNIEnv *env, jobject obj) {
@@ -39,7 +39,6 @@ JNIEXPORT jobjectArray JNICALL Java_com_codecs_MainActivity_getListCodec(JNIEnv 
     }
     return arr;
 }
-JNIEXPORT void JNICALL Java_com_codecs_MainActivity_Init(JNIEnv *env, jobject obj) {
+JNIEXPORT void JNICALL Java_com_codecs_MainActivity_InitParms(JNIEnv *env, jobject obj) {
     vos::medialib::H264EncoderFilter_Internal* enc = new vos::medialib::H264EncoderFilter_Internal();
-    enc->InitSettings();
 }

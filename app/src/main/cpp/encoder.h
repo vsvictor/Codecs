@@ -11,6 +11,8 @@ namespace vos {
 
     namespace medialib {
 
+        const int Kb = 1024;
+
         class H264EncoderFilter_Internal {
 
         public:

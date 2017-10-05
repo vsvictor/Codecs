@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Used to load the 'native-lib' library on application startup.
     static {
-        System.loadLibrary("native-lib");
+        System.loadLibrary("encoder");
     }
 
     @Override
@@ -22,11 +22,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         MediaCodecInfo[] info = getListCodec();
         for(int i = 0; i<info.length;i++) {
-            Log.i(TAG, "Codec number: " + i + ", name: " + info[i].getName() +" is Encoder? "+ info[i].isEncoder());
+            Log.i(TAG, "Codec number: " + i + ", name: " + info[i].getName() +" is Encoder? "+ info[i].isEncoder()+"    "+isEncoder(info[i]));
         }
         EncoderInternal enc = new EncoderInternal();
         enc.InitEncoder("video/avc",320,200,30,100000, 5);
+        //InitParms();
     }
     public native MediaCodecInfo[] getListCodec();
-    //public native boolean isEncoder(MediaCodecInfo info);
+    public native boolean isEncoder(MediaCodecInfo info);
+    //public native void InitParms();
 }
