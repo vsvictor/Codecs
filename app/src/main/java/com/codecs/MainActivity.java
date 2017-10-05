@@ -1,12 +1,10 @@
 package com.codecs;
 
 import android.media.MediaCodecInfo;
-import android.media.MediaCodecList;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,8 +21,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         MediaCodecInfo[] info = getListCodec();
-        Log.i(TAG,"Codec count: "+info.length+", first: "+MediaCodecList.getCodecInfoAt(0).getName());
-
+        for(int i = 0; i<info.length;i++) {
+            Log.i(TAG, "Codec number: " + i + ", name: " + info[i].getName() +" is Encoder? "+ info[i].isEncoder());
+        }
+        EncoderInternal enc = new EncoderInternal();
+        enc.InitEncoder("video/avc",320,200,30,100000, 5);
     }
     public native MediaCodecInfo[] getListCodec();
+    //public native boolean isEncoder(MediaCodecInfo info);
 }
