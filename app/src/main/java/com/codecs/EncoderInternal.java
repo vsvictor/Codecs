@@ -48,6 +48,7 @@ public class EncoderInternal
         Log.i(TAG, "Mime: "+this.mime+", width: "+this.width+", height:"+this.height+", framerate:"+this.frameRate+", bitrate:"+this.bitRate+", I-interval:"+this.i_interval);
         MediaFormat mediaFormat = MediaFormat.createVideoFormat(this.mime, this.width, this.height);
         mediaFormat.setInteger(MediaFormat.KEY_PROFILE, MediaCodecInfo.CodecProfileLevel.AVCProfileBaseline);
+        mediaFormat.setInteger(MediaFormat.KEY_LEVEL, MediaCodecInfo.CodecProfileLevel.AVCLevel13);
         mediaFormat.setInteger(MediaFormat.KEY_BIT_RATE, this.bitRate);
         mediaFormat.setInteger(MediaFormat.KEY_FRAME_RATE, this.frameRate);
         mediaFormat.setInteger(MediaFormat.KEY_COLOR_FORMAT, MediaCodecInfo.CodecCapabilities.COLOR_FormatSurface);

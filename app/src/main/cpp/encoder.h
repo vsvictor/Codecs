@@ -3,7 +3,7 @@
 
 #include "VideoResolution.h"
 #include <memory>
-
+#include <media/NdkMediaCodec.h>
 namespace vos {
     namespace log {
         class Category;
@@ -11,15 +11,36 @@ namespace vos {
 
     namespace medialib {
 
-        const int Kb = 1024;
 
         class H264EncoderFilter_Internal {
+        public:
+            const int Kb = 1024;
+            const char* VIDEO_AVC_MIME = "video/avc";
+
+            const char* KEY_PROFILE = "profile";
+            const int AVC_PROFILE_BASE_LINE = 1;
+            const char* KEY_LEVEL = "level";
+            const int AVC_LEVEL_13 = 16;
+            const char* KEY_BIT_RATE = "bitrate";
+            const char* KEY_FRAME_RATE = "frame-rate";
+            const char* KEY_COLOR_FORMAT = "color-format";
+            const int COLOR_FORMAT_SURFACE= 2130708361;
+            const char* KEY_I_FRAME_INTERVAL = "i-frame-interval";
+
+            const int CONFIGURE_FLAG_ENCODE = 1;
 
         public:
             H264EncoderFilter_Internal();
             void InitSettings();
             void InitEncoder();
+            void SetBitRate(int bitrate);
             void StartEncoder();
+            void StopEncoder();
+            void CloseEncoder();
+            void OnNewFrameRate();
+            uint8_t* EncodeFrame(uint8_t* data, bool isIFrame);
+            vos::mediadescription::VideoResolution GetMaxSupportedResolution();
+            bool isStarted(){ return started;}
         private:
             typedef struct
             {
@@ -35,6 +56,9 @@ namespace vos {
             } h264setting_internal;
 
             std::unique_ptr<h264setting_internal> m_encSettings;
+            AMediaCodec* codec;
+
+            bool started = false;
 
         };
 
