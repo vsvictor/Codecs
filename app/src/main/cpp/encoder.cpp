@@ -18,6 +18,8 @@ void H264EncoderFilter_Internal::InitSettings() {
 }
 void H264EncoderFilter_Internal::InitEncoder() {
     AMediaFormat* format = AMediaFormat_new();
+    AMediaFormat_setInt32(format,KEY_WIDTH, m_encSettings->resolution.width);
+    AMediaFormat_setInt32(format,KEY_HEIGHT, m_encSettings->resolution.height);
     AMediaFormat_setInt32(format,KEY_PROFILE, AVC_PROFILE_BASE_LINE);
     AMediaFormat_setInt32(format,KEY_LEVEL, AVC_LEVEL_13);
     AMediaFormat_setInt32(format,KEY_BIT_RATE, m_encSettings->bitrate);

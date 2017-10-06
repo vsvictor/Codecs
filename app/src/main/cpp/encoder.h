@@ -17,6 +17,8 @@ namespace vos {
             const int Kb = 1024;
             const char* VIDEO_AVC_MIME = "video/avc";
 
+            const char* KEY_WIDTH = "width";
+            const char* KEY_HEIGHT = "height";
             const char* KEY_PROFILE = "profile";
             const int AVC_PROFILE_BASE_LINE = 1;
             const char* KEY_LEVEL = "level";

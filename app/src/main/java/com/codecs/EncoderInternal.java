@@ -53,7 +53,6 @@ public class EncoderInternal
         mediaFormat.setInteger(MediaFormat.KEY_FRAME_RATE, this.frameRate);
         mediaFormat.setInteger(MediaFormat.KEY_COLOR_FORMAT, MediaCodecInfo.CodecCapabilities.COLOR_FormatSurface);
         mediaFormat.setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, this.i_interval);
-
         mediaCodec.configure(mediaFormat, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE);
         return true;
     }
