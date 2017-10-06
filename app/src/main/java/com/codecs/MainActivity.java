@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.media.MediaCodecList;
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,15 +22,26 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        MediaCodecInfo[] info = getListCodec();
-        for(int i = 0; i<info.length;i++) {
-            Log.i(TAG, "Codec number: " + i + ", name: " + info[i].getName() +" is Encoder? "+ info[i].isEncoder()+"    "+isEncoder(info[i]));
+
+        //MediaCodecInfo[] info = getListCodec();
+        int count = MediaCodecList.getCodecCount();
+        for(int i = 0; i<count;i++) {
+            MediaCodecInfo info = MediaCodecList.getCodecInfoAt(i);
+            Log.i(TAG, "Codec number: " + i + ", name: " + info.getName()+" is Encoder? "+ info.isEncoder());
         }
+
         EncoderInternal enc = new EncoderInternal();
-        enc.InitEncoder("video/avc",320,200,30,100000, 5);
+        boolean res = false;
+        try {
+            res = enc.InitEncoder("video/avc",320,200,30,100000, 5);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if(res) Log.i(TAG, "Initialized");
+        else Log.i(TAG, "Init fail!!!");
         //InitParms();
     }
     public native MediaCodecInfo[] getListCodec();
-    public native boolean isEncoder(MediaCodecInfo info);
+    //public native boolean isEncoder(MediaCodecInfo info);
     //public native void InitParms();
 }

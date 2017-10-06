@@ -8,6 +8,7 @@ import android.media.MediaCodec;
 import android.media.MediaCodecInfo;
 import android.media.MediaCodecList;
 import android.media.MediaFormat;
+import android.util.Log;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -34,8 +35,7 @@ public class EncoderInternal
     {
     }
 
-    public boolean InitEncoder(String mime, int width, int height, int framerate, int bitrate, int i_frame_interval)
-    {
+    public boolean InitEncoder(String mime, int width, int height, int framerate, int bitrate, int i_frame_interval) throws IOException {
         this.mime = mime;
         this.width = width;
         this.height = height;
@@ -43,19 +43,13 @@ public class EncoderInternal
         this.frameRate = framerate;
         this.i_interval = i_frame_interval;
 
-        try
-        {
-            mediaCodec = MediaCodec.createEncoderByType(mime);
-        }
-        catch (IOException e)
-        {
-            return false;
-        }
+        mediaCodec = MediaCodec.createEncoderByType(mime);
 
+        Log.i(TAG, "Mime: "+this.mime+", width: "+this.width+", height:"+this.height+", framerate:"+this.frameRate+", bitrate:"+this.bitRate+", I-interval:"+this.i_interval);
         MediaFormat mediaFormat = MediaFormat.createVideoFormat(this.mime, this.width, this.height);
         mediaFormat.setInteger(MediaFormat.KEY_BIT_RATE, this.bitRate);
         mediaFormat.setInteger(MediaFormat.KEY_FRAME_RATE, this.frameRate);
-        mediaFormat.setInteger(MediaFormat.KEY_COLOR_FORMAT, MediaCodecInfo.CodecCapabilities.COLOR_FormatYUV420SemiPlanar);
+        mediaFormat.setInteger(MediaFormat.KEY_COLOR_FORMAT, MediaCodecInfo.CodecCapabilities.COLOR_FormatSurface);
         mediaFormat.setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, this.i_interval);
 
         mediaCodec.configure(mediaFormat, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE);

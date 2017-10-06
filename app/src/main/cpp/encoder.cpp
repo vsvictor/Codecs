@@ -15,4 +15,7 @@ void H264EncoderFilter_Internal::InitSettings() {
     m_encSettings->framerate = 30;
     m_encSettings->iframe_interval = 5;
 }
+void H264EncoderFilter_Internal::InitEncoder() {
+
+}
 

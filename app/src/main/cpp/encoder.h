@@ -18,7 +18,7 @@ namespace vos {
         public:
             H264EncoderFilter_Internal();
             void InitSettings();
-
+            void InitEncoder();
         private:
             typedef struct
             {
