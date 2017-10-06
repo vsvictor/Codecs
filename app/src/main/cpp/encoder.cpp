@@ -19,3 +19,7 @@ void H264EncoderFilter_Internal::InitEncoder() {
 
 }
 
+void H264EncoderFilter_Internal::StartEncoder() {
+
+}
+
