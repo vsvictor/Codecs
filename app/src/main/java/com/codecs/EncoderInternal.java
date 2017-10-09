@@ -84,17 +84,12 @@ public class EncoderInternal{
             Log.i("ENCODE", "Buffers inited");
             int inputBufferIndex = mediaCodec.dequeueInputBuffer(-1);
             if (inputBufferIndex >= 0) {
-                int beg = 0;
-                while (beg<input.length) {
-                    long pts = computePresentationTime(frameIndex, frameRate);
-                    ByteBuffer inputBuffer = inputBuffers[inputBufferIndex];
-                    inputBuffer.clear();
-                    inputBuffer.put(input, beg, inputBuffer.limit());
-                    mediaCodec.queueInputBuffer(inputBufferIndex, 0, inputBuffer.limit(), pts, 0);
-                    frameIndex++;
-                    inputBufferIndex++;
-                    beg += inputBuffer.limit();
-                }
+                long pts = computePresentationTime(frameIndex, frameRate);
+                ByteBuffer inputBuffer = inputBuffers[inputBufferIndex];
+                inputBuffer.clear();
+                inputBuffer.put(input); //, 0, input.length);
+                mediaCodec.queueInputBuffer(inputBufferIndex, 0, input.length, pts, 0);
+                frameIndex++;
             }
             Log.i("ENCODE", "Input start data to buffers");
             MediaCodec.BufferInfo bufferInfo = new MediaCodec.BufferInfo();

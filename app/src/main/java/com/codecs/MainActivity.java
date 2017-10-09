@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         if(res) Log.i(TAG, "Initialized");
         else Log.i(TAG, "Init fail!!!");
         BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inSampleSize = 4;
+        options.inSampleSize = 8;
         Bitmap bitmap = BitmapFactory.decodeFile("/sdcard/DCIM/Camera/pict.jpg", options);
         ivBitmap.setImageBitmap(bitmap);
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
