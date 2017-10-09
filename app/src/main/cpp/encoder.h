@@ -40,8 +40,8 @@ namespace vos {
             void StopEncoder();
             void CloseEncoder();
             void OnNewFrameRate();
-            uint8_t* EncodeFrame(uint8_t* data, bool isIFrame);
-            vos::mediadescription::VideoResolution GetMaxSupportedResolution();
+            void EncodeFrame(uint8_t *input, size_t ilen, uint8_t *output, size_t olen, bool isIFrame);
+            //vos::mediadescription::VideoResolution GetMaxSupportedResolution();
             bool isStarted(){ return started;}
         private:
             typedef struct
@@ -58,7 +58,7 @@ namespace vos {
             } h264setting_internal;
 
             std::unique_ptr<h264setting_internal> m_encSettings;
-            AMediaCodec* codec;
+            //AMediaCodec* codec;
 
             bool started = false;
 

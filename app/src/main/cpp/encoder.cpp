@@ -1,5 +1,6 @@
 #include "encoder.h"
 #include <media/NdkMediaCodec.h>
+#include <vector>
 using namespace vos::medialib;
 
 H264EncoderFilter_Internal::H264EncoderFilter_Internal():m_encSettings(new h264setting_internal)
@@ -17,6 +18,7 @@ void H264EncoderFilter_Internal::InitSettings() {
     m_encSettings->iframe_interval = 5;
 }
 void H264EncoderFilter_Internal::InitEncoder() {
+/*
     AMediaFormat* format = AMediaFormat_new();
     AMediaFormat_setInt32(format,KEY_WIDTH, m_encSettings->resolution.width);
     AMediaFormat_setInt32(format,KEY_HEIGHT, m_encSettings->resolution.height);
@@ -30,12 +32,18 @@ void H264EncoderFilter_Internal::InitEncoder() {
     codec = AMediaCodec_createEncoderByType(VIDEO_AVC_MIME);
 
     AMediaCodec_configure(codec, format, NULL, NULL, CONFIGURE_FLAG_ENCODE);
+*/
 }
 
 void H264EncoderFilter_Internal::StartEncoder() {
-    AMediaCodec_start(codec);
+    //AMediaCodec_start(codec);
 }
 
 void H264EncoderFilter_Internal::StopEncoder() {
-    AMediaCodec_stop(codec);
+    //AMediaCodec_stop(codec);
+}
+
+void H264EncoderFilter_Internal::EncodeFrame(uint8_t *input, size_t ilen, uint8_t *output, size_t olen, bool isIFrame) {
+    //output = AMediaCodec_getInputBuffer(codec, ilen, &olen);
+    //AMediaCodec_getOutputBuffer()
 }
