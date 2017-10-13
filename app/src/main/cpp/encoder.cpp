@@ -1,7 +1,18 @@
 #include "encoder.h"
 #include <media/NdkMediaCodec.h>
-#include <vector>
+#include <malloc.h>
+
+#define NANOS_IN_SECOND 1000000000
+
 using namespace vos::medialib;
+
+static long currentTimeInNanos() {
+
+    struct timespec res;
+    clock_gettime(CLOCK_MONOTONIC, &res);
+    return (res.tv_sec * NANOS_IN_SECOND) + res.tv_nsec;
+}
+
 
 H264EncoderFilter_Internal::H264EncoderFilter_Internal():m_encSettings(new h264setting_internal)
 {
@@ -31,7 +42,7 @@ void H264EncoderFilter_Internal::InitEncoder() {
 
     codec = AMediaCodec_createEncoderByType(VIDEO_AVC_MIME);
 
-    AMediaCodec_configure(codec, format, NULL, NULL, CONFIGURE_FLAG_ENCODE);
+    media_status_t status = AMediaCodec_configure(codec, format, NULL, NULL, CONFIGURE_FLAG_ENCODE);
 */
 }
 
@@ -44,6 +55,35 @@ void H264EncoderFilter_Internal::StopEncoder() {
 }
 
 void H264EncoderFilter_Internal::EncodeFrame(uint8_t *input, size_t ilen, uint8_t *output, size_t olen, bool isIFrame) {
-    //output = AMediaCodec_getInputBuffer(codec, ilen, &olen);
-    //AMediaCodec_getOutputBuffer()
+/*
+    int64_t startWhenUsec = currentTimeInNanos();
+    ssize_t index = AMediaCodec_dequeueInputBuffer(codec, -1);
+    size_t out_size;
+    if(index >= 0 ){
+        uint8_t *buffer = AMediaCodec_getInputBuffer(codec, index, &out_size);
+        if(out_size > 0){
+            memcpy(buffer, input, out_size);
+            AMediaCodec_queueInputBuffer(codec, index, 0, out_size, startWhenUsec, AMEDIACODEC_BUFFER_FLAG_END_OF_STREAM);
+        }
+    }
+    AMediaCodecBufferInfo *info = (AMediaCodecBufferInfo *) malloc(sizeof(AMediaCodecBufferInfo));
+    ssize_t outIndex;
+    do{
+        outIndex = AMediaCodec_dequeueOutputBuffer(codec, info, 0);
+        size_t out_size;
+        if (outIndex >= 0) {
+            uint8_t *outputBuffer = AMediaCodec_getOutputBuffer(codec, outIndex, &out_size);
+            if(output == NULL) output = (uint8_t*)malloc(out_size);
+            AMediaCodec_releaseOutputBuffer(codec, outIndex, false);
+            memcpy(output, outputBuffer, out_size);
+        } else if (outIndex == AMEDIACODEC_INFO_OUTPUT_FORMAT_CHANGED) {
+            AMediaFormat *outFormat = AMediaCodec_getOutputFormat(codec);
+        }
+    }while(outIndex >= 0);
+*/
 }
+
+long H264EncoderFilter_Internal::computePresentationTime(long frameIndex, int framerate){
+    return 132 + frameIndex * 1000000 / framerate;
+}
+

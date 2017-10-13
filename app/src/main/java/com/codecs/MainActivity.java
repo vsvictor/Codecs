@@ -2,6 +2,7 @@ package com.codecs;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaCodecInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -25,6 +26,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        MediaCodecInfo[] infs = getListCodec();
+        for(int i = 0; i<infs.length;i++){
+            Log.i(TAG, "Codec: "+infs[i].getName());
+        }
+
+
         ivBitmap = (ImageView) findViewById(R.id.ivBitmap);
         EncoderInternal enc = new EncoderInternal();
         boolean res = enc.InitEncoder("video/avc",320,240,30,100000, 5);
@@ -41,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         byte[] pict = enc.EncodeFrame(byteArray);
         Log.i(TAG, "Encoded? result size:" + pict.length);
     }
-    //public native MediaCodecInfo[] getListCodec();
+    public native MediaCodecInfo[] getListCodec();
     //public native boolean isEncoder(MediaCodecInfo info);
     //public native void InitParms();
 }

@@ -44,6 +44,8 @@ namespace vos {
             //vos::mediadescription::VideoResolution GetMaxSupportedResolution();
             bool isStarted(){ return started;}
         private:
+            long computePresentationTime(long frameIndex, int framerate);
+            static long currentTimeInNanos();
             typedef struct
             {
                 unsigned payloadSize;
@@ -59,7 +61,7 @@ namespace vos {
 
             std::unique_ptr<h264setting_internal> m_encSettings;
             //AMediaCodec* codec;
-
+            int frameIndex = 0;
             bool started = false;
 
         };

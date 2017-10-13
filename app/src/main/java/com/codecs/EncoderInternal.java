@@ -48,11 +48,12 @@ public class EncoderInternal{
         }
 
         MediaFormat mediaFormat = MediaFormat.createVideoFormat(this.mime, this.width, this.height);
+        mediaFormat.setString(MediaFormat.KEY_MIME, "video/avc");
         mediaFormat.setInteger("profile", MediaCodecInfo.CodecProfileLevel.AVCProfileBaseline);
         mediaFormat.setInteger("level", MediaCodecInfo.CodecProfileLevel.AVCLevel13);
         mediaFormat.setInteger(MediaFormat.KEY_BIT_RATE, this.bitRate);
         mediaFormat.setInteger(MediaFormat.KEY_FRAME_RATE, this.frameRate);
-        mediaFormat.setInteger(MediaFormat.KEY_COLOR_FORMAT, MediaCodecInfo.CodecCapabilities.COLOR_FormatYUV420SemiPlanar);
+        mediaFormat.setInteger(MediaFormat.KEY_COLOR_FORMAT, MediaCodecInfo.CodecCapabilities.COLOR_FormatYUV420Planar);
         mediaFormat.setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, this.i_interval);
 
         mediaCodec.configure(mediaFormat, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE);
